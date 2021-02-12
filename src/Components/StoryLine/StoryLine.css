@@ -1,0 +1,8 @@
+.storyLineContainer {
+  display: flex;
+  /* background-color: lightcoral; */
+  
+}
+.thumbnail{
+    margin: 1em;
+}

@@ -1,0 +1,68 @@
+.thumbnailContainer {
+  /* height: 120px;
+  width: 67.5px; */
+  height:75px;
+  width:75px;
+  color: black;
+  border-radius: 5px;
+  margin: 0.5em;
+  
+  background-size: cover;
+
+  cursor: pointer;
+}
+h1 {
+  color: black;
+}
+.imageContainer {
+  position: relative;
+}
+.leftButton {
+  position: absolute;
+  width: 30%;
+  height: 100%;
+  left: 0;
+  z-index: 1;
+}
+.rightButton {
+  position: absolute;
+  width: 30%;
+  height: 100%;
+  right: 0;
+  z-index: 1;
+}
+.rightButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  
+}
+.leftButton:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  
+}
+.hotspots {
+  position: absolute;
+  height: 100%;
+  width: 414px;
+  
+}
+.hotspot {
+  position: absolute;
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 50%;
+  border: 2px solid;
+  z-index: 2;
+  color: white;
+  
+}
+a{
+  display: block;
+  width:1.5em;
+  height:1.5em;
+}
+
+.hotspot:hover{
+  cursor: pointer;
+}
