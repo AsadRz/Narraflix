@@ -32,7 +32,7 @@ const fetchHotSpots = () => {
         .then((res) => {
           dispatch({
             type: constants.FETCH_HOTSPOTS,
-            payload: { hotSpots: response },
+            payload: { hotSpots: res.data },
           });
         })
         .catch(error => {
@@ -52,7 +52,7 @@ const fetchStoryItems = () => {
         .then((res) => {
           dispatch({
             type: constants.FETCH_STORY_ITEMS,
-            payload: { storyItems: response },
+            payload: { storyItems: res.data },
           });
         })
         .catch(error => {
