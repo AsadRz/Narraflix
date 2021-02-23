@@ -1,15 +1,16 @@
 .Nav {
   background-color: #2f5c87;
-  height: 7.5%;
+  height: 50px;
+
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   
 }
 
 h4 {
   margin: 0;
-  padding-left: 3em;
+ 
   color: white;
 }
 .logo {
@@ -17,7 +18,10 @@ h4 {
   display: flex;
 }
 .navLinks {
-  width: 30%;
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
 }
 
 .navItems {
@@ -25,10 +29,57 @@ h4 {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: space-around;
+  
   list-style: none;
 }
 .navLink {
   color: white;
   cursor: pointer;
+  text-decoration: none;
+  
+
+}
+.icon {
+  display: none;
+  color: white;
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
+  outline: none;
+}
+/* Screen Size Tablet */
+@media screen and (max-width: 768px) {
+   .navLink {display: none;}
+  .icon {
+    float: right;
+    padding-left: 8em;
+    display: block;
+  }
+  .Nav.responsive {position: relative;}
+  .Nav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .Nav.responsive .navLink {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+@media screen and (max-width: 768px) {
+  .navLinks.responsive {position: relative;
+  flex-direction: column;}
+  .navLinks.responsive .icon {
+    position: absolute;
+    right: 8%;
+    top: 2%;
+  }
+  .navLinks.responsive a {
+    float: none;
+    
+    display: block;
+    text-align: left;
+  }
 }

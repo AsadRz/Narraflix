@@ -1,21 +1,21 @@
-import "./StoryLine.css";
-import Thumbnail from "../Thumbnail/Thumbnail";
+import './StoryLine.css';
+import React, { Suspense } from 'react';
+const Thumbnail = React.lazy(() => import('../Thumbnail/Thumbnail'));
 
 const StoryLine = (props) => {
   return (
-    <div className="storyLineContainer">
-      {console.log("Props", props)}
-      {props.line.storylineitem_set.map((k, index) => {
-        console.log("StoryLine", k);
+    <div className='storyLineContainer'>
+      {props.line.storylineitem_set.map((storyLineItem, index) => {
         return (
-          <Thumbnail
-            id={props.line.id}
-            image={k.image}
-            index={index}
-            // length={props.line.storylineitem_set.length}
-            className="thumbnail"
-            key={index}
-          />
+          <Suspense key={index} fallback={<div>.</div>}>
+            <Thumbnail
+              id={props.line.id}
+              image={storyLineItem.image}
+              index={index}
+              className='thumbnail'
+              key={index}
+            />
+          </Suspense>
         );
       })}
     </div>

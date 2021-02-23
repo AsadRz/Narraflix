@@ -1,31 +1,40 @@
-import View from "../View/View";
-import StoryLine from "../StoryLine/StoryLine";
-import actions from "../../store/actions";
-import "./Home.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+// import View from '../View/View';
+// import StoryLine from "../StoryLine/StoryLine";
+import actions from '../../store/actions';
+import React, { Suspense } from 'react';
+import './Home.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+const StoryLine = React.lazy(() => import('../StoryLine/StoryLine'));
 const Home = () => {
   //Dispatch variable
   const dispatch = useDispatch();
   //Hooks
   useEffect(() => {
-    console.log("is Fetching");
     dispatch(actions.fetchStoryLines());
     dispatch(actions.fetchHotSpots());
     dispatch(actions.fetchStoryItems());
-  }, []);
+  }, [dispatch]);
   //state
-  const data = useSelector((state) => state.storyLines);
-  console.log("Hello", data);
-
+  const data = useSelector((state) => {
+    console.log('State', state);
+    return state.storyLines;
+  });
+  console.log('Data Being Fetched', data);
   return (
-    <div className="homeContainer">
-   
-      {data !== undefined &&
-        data.map((x) => {
-          return <StoryLine className="storyLine" line={x} />;
-        })}
-      
+    <div className='homeContainer'>
+      <Suspense fallback={<div>Loading</div>}>
+        {data !== undefined &&
+          data.map((storyLine) => {
+            return (
+              <StoryLine
+                key={storyLine.id}
+                className='storyLine'
+                line={storyLine}
+              />
+            );
+          })}
+      </Suspense>
     </div>
   );
 };
