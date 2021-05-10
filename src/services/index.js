@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = "https://stories.narraflix.com/api/"
+const baseURL = "https://api.narraflix.com/api/"
 const Version = "v1/"
 const API = axios.create({
   baseURL: `${baseURL}${Version}`,

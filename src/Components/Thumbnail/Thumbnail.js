@@ -48,7 +48,7 @@ const Thumbnail = (props) => {
     storyLine = storyLine[0];
     return storyLine;
   };
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   let storyLine = storyLineExtractor(id);
   let length = storyLine.storylineitem_set.length;
 
@@ -176,7 +176,7 @@ const Thumbnail = (props) => {
     setBg(storyLine.storylineitem_set[index - 1].image);
   };
 
-  const hotspotExternalClick = () => {};
+  const hotspotExternalClick = () => { };
 
   const classes = useStyles();
 
@@ -189,6 +189,9 @@ const Thumbnail = (props) => {
           width: "414px",
           backgroundSize: "cover",
           position: "relative",
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: 'black'
         }}
       >
         {" "}
@@ -201,9 +204,9 @@ const Thumbnail = (props) => {
               backgroundSize: "cover",
               position: "absolute",
             }}
-            
-            
-            autoPlay 
+
+
+            autoPlay
             loop
           >
             <source src={storyLine.storylineitem_set[index].video} />
@@ -212,10 +215,12 @@ const Thumbnail = (props) => {
           <img
             src={bg}
             style={{
-              height: "100%",
-              width: "414px",
-              backgroundSize: "cover",
-              position: "absolute",
+              // height: "100%",
+              // width: "414px",
+              // backgroundSize: "cover",
+              // position: "absolute",
+              width: '100%',
+              objectFit: 'contain'
             }}
           ></img>
         )}
