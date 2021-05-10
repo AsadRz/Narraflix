@@ -3,13 +3,15 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import actions from "../../store/actions";
 import { useColor } from "color-thief-react";
 
 const Thumbnail = (props) => {
   //Dispatch variable
   const dispatch = useDispatch();
-
+  let history = useHistory();
+  let { sid } = useParams();
   //useState
   const [viewModal, setViewModal] = useState(false);
   const storyItems = useSelector((state) => state.storyItems);
@@ -17,7 +19,7 @@ const Thumbnail = (props) => {
   const [bg, setBg] = useState(props.image);
   const [index, setIndex] = useState(props.index);
   const storyLines = useSelector((state) => state.storyLines);
-  const [id, setId] = useState(props.id);
+  const [id, setId] = useState(props.id || sid);
   const [width, setWidth] = useState(window.innerWidth);
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
@@ -28,7 +30,7 @@ const Thumbnail = (props) => {
       window.removeEventListener("resize", handleWindowSizeChange);
     };
   }, []);
-  
+
   let isMobile = width <= 444;
   const { data, loading, error } = useColor("/mountains.jpg", "hex", {
     crossOrigin: "Anonymous",
@@ -46,7 +48,7 @@ const Thumbnail = (props) => {
       position: "absolute",
       width: "100%",
       height: "100%",
-      backgroundColor: isMobile===false?data === null ? "#000" : data:"black",
+      backgroundColor: isMobile === false ? data === null ? "#000" : data : "black",
       boxShadow: theme.shadows[5],
       alignContent: "center",
       justifyContent: "center",
@@ -163,6 +165,7 @@ const Thumbnail = (props) => {
   };
 
   const handleOpen = () => {
+    history.push(`/storyline/${storyLine.storylineitem_set[index].uuid}/${storyLine.storylineitem_set[index].id}`);
     setViewModal(true);
   };
 
@@ -173,17 +176,20 @@ const Thumbnail = (props) => {
     setId(props.id);
     setIndex(props.index);
     storyLine = [];
+    history.push(`/`);
   };
 
   const leftButtonClicked = () => {
     if (index <= length - 1 && index > 0) {
       setIndex(index - 1);
+      history.push(`/storyline/${storyLine.storylineitem_set[index - 1].uuid}/${storyLine.storylineitem_set[index - 1].id}`);
     }
   };
 
   const rightButtonClicked = () => {
     if (index < length - 1) {
       setIndex(index + 1);
+      history.push(`/storyline/${storyLine.storylineitem_set[index + 1].uuid}/${storyLine.storylineitem_set[index + 1].id}`);
     }
   };
 
@@ -191,6 +197,7 @@ const Thumbnail = (props) => {
     let item = storyItemSpec(id);
     item = item[0];
     let st = storyLineExtractor(item.storyline);
+    history.push(`/storyline/${st.uuid}/${st.id}`);
     storyLine = st;
     setId(storyLine.id);
     setIndex(item.order - 1);

@@ -1,10 +1,9 @@
 // import View from '../View/View';
 // import StoryLine from "../StoryLine/StoryLine";
 import actions from '../../store/actions';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import './Home.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 const StoryLine = React.lazy(() => import('../StoryLine/StoryLine'));
 const Home = () => {
   //Dispatch variable
@@ -15,6 +14,9 @@ const Home = () => {
     dispatch(actions.fetchHotSpots());
     dispatch(actions.fetchStoryItems());
   }, [dispatch]);
+
+
+
   //state
   const data = useSelector((state) => {
     console.log('State', state);
@@ -39,3 +41,10 @@ const Home = () => {
   );
 };
 export default Home;
+
+
+
+
+
+
+
