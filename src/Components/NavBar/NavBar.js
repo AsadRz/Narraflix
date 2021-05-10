@@ -1,17 +1,28 @@
 import "./NavBar.css";
 const NavBar = () => {
+  const navMenuViewer = () => {
+    var x = document.getElementById("navLinks");
+    if (x.className === "navLinks") {
+      x.className += " responsive";
+    } else {
+      x.className = "navLinks";
+    }
+  };
   return (
     <div className="Nav">
-      <div className="logo">
-        <h4>Stories</h4>
-      </div>
-      <div className="navLinks">
-        <ul className="navItems">
-            <li className="navLink">Home</li>
-            <li className="navLink">About us</li>
-            <li className="navLink">Contact us</li>
-        </ul>
-      </div>
+      <h4>Stories</h4>
+
+      {/* <div className="navLinks" id="navLinks">
+        <a href="#home" className="active navLink" >
+          Home
+        </a>
+        <a href="#news" className="navLink">News</a>
+        <a href="#contact" className="navLink">Contact</a>
+        <a href="#about" className="navLink">About</a>
+        <a  className="icon" onClick={navMenuViewer}>
+          --<i className="fa fa-bars"></i>
+        </a>
+      </div> */}
     </div>
   );
 };
