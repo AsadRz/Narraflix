@@ -3,17 +3,17 @@
 import actions from '../../store/actions';
 import React, { Suspense, useEffect } from 'react';
 import './Home.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 const StoryLine = React.lazy(() => import('../StoryLine/StoryLine'));
 const Home = () => {
   //Dispatch variable
-  const dispatch = useDispatch();
-  //Hooks
-  useEffect(() => {
-    dispatch(actions.fetchStoryLines());
-    dispatch(actions.fetchHotSpots());
-    dispatch(actions.fetchStoryItems());
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // //Hooks
+  // useEffect(() => {
+  //   dispatch(actions.fetchStoryLines());
+  //   dispatch(actions.fetchHotSpots());
+  //   dispatch(actions.fetchStoryItems());
+  // }, [dispatch]);
 
 
 

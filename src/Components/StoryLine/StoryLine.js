@@ -14,6 +14,7 @@ const StoryLine = (props) => {
               index={index}
               className='thumbnail'
               key={index}
+              uuid={props.line.uuid}
             />
           </Suspense>
         );

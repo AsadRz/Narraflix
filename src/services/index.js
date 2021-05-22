@@ -4,15 +4,16 @@ const Version = "v1/"
 const API = axios.create({
   baseURL: `${baseURL}${Version}`,
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": 'Token d385962ed0c8d6d06681b2dc196ece01e23d07f1'
   }
 });
 
-API.interceptors.request.use(function (config) {
-  const token = 'Token d385962ed0c8d6d06681b2dc196ece01e23d07f1'
-  config.headers.Authorization = token ? token : '';
-  return config;
-});
+// API.interceptors.request.use(function (config) {
+//   const token = 'Token d385962ed0c8d6d06681b2dc196ece01e23d07f1'
+//   config.headers.Authorization = token ? token : '';
+//   return config;
+// });
 //For integrating Triggers.
 
 const storyLines = '/storyline';

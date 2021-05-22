@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import actions from "../../store/actions";
 import { useColor } from "color-thief-react";
+import Loader from '../../assets/Img/loaderrrrr.gif'
+
 
 const Thumbnail = (props) => {
   //Dispatch variable
@@ -13,7 +15,7 @@ const Thumbnail = (props) => {
   let history = useHistory();
   let { sid } = useParams();
   //useState
-  const [viewModal, setViewModal] = useState(false);
+  const [viewModal, setViewModal] = useState(props.open);
   const storyItems = useSelector((state) => state.storyItems);
   const hotSpots = useSelector((state) => state.hotSpots);
   const [bg, setBg] = useState(props.image);
@@ -21,6 +23,8 @@ const Thumbnail = (props) => {
   const storyLines = useSelector((state) => state.storyLines);
   const [id, setId] = useState(props.id || sid);
   const [width, setWidth] = useState(window.innerWidth);
+  const [imgLoading, setImgLoading] = useState(true);
+
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
   }
@@ -165,7 +169,7 @@ const Thumbnail = (props) => {
   };
 
   const handleOpen = () => {
-    history.push(`/storyline/${storyLine.storylineitem_set[index].uuid}/${storyLine.storylineitem_set[index].id}`);
+    history.push(`/storyline/${props.uuid}/${storyLine.storylineitem_set[index].id}`);
     setViewModal(true);
   };
 
@@ -181,15 +185,17 @@ const Thumbnail = (props) => {
 
   const leftButtonClicked = () => {
     if (index <= length - 1 && index > 0) {
+      setImgLoading(true);
       setIndex(index - 1);
-      history.push(`/storyline/${storyLine.storylineitem_set[index - 1].uuid}/${storyLine.storylineitem_set[index - 1].id}`);
+      history.push(`/storyline/${props.uuid}/${storyLine.storylineitem_set[index - 1].id}`);
     }
   };
 
   const rightButtonClicked = () => {
     if (index < length - 1) {
+      setImgLoading(true);
       setIndex(index + 1);
-      history.push(`/storyline/${storyLine.storylineitem_set[index + 1].uuid}/${storyLine.storylineitem_set[index + 1].id}`);
+      history.push(`/storyline/${props.uuid}/${storyLine.storylineitem_set[index + 1].id}`);
     }
   };
 
@@ -197,7 +203,7 @@ const Thumbnail = (props) => {
     let item = storyItemSpec(id);
     item = item[0];
     let st = storyLineExtractor(item.storyline);
-    history.push(`/storyline/${st.uuid}/${st.id}`);
+    history.push(`/storyline/${st.uuid}/${st.storylineitem_set[0].id}`);
     storyLine = st;
     setId(storyLine.id);
     setIndex(item.order - 1);
@@ -229,7 +235,22 @@ const Thumbnail = (props) => {
             <source src={storyLine.storylineitem_set[index].video} />
           </video>
         ) : (
-          <img id="image" src={bg}></img>
+          <>
+            {imgLoading ? (
+              <img
+                id="image" className="loaderImg" src={Loader}
+              />
+            ) : ('')}
+            <img
+              id="image" src={bg}
+              style={{ display: imgLoading ? 'none' : 'block' }}
+              onLoad={() => {
+                setImgLoading(false);
+                // console.log('img is load');
+                // alert('img loaded')
+              }}
+            />
+          </>
         )}
         {index > 0 && (
           <div className="leftButton" onClick={leftButtonClicked}></div>
@@ -245,25 +266,30 @@ const Thumbnail = (props) => {
 
   let BG = props.image;
 
+  console.log(viewModal, 'viewModel');
+
   return (
     <div>
-      <div
-        style={{
-          backgroundImage: `url("${BG}")`,
-          backgroundSize: "cover  ",
-        }}
-        className="thumbnailContainer"
-        onClick={handleOpen}
-      ></div>
-
-      <Modal
-        open={viewModal}
-        onClose={handleClose}
-        aria-labelledby="Image-Modal"
-        aria-describedby="This is a modal containing stories"
-      >
-        {body}
-      </Modal>
+      {!props.isRedirectUrl &&
+        <div
+          style={{
+            backgroundImage: `url("${BG}")`,
+            backgroundSize: "cover  ",
+          }}
+          className="thumbnailContainer"
+          onClick={handleOpen}
+        ></div>
+      }
+      {props.isRedirectUrl &&
+        <Modal
+          open={viewModal}
+          onClose={handleClose}
+          aria-labelledby="Image-Modal"
+          aria-describedby="This is a modal containing stories"
+        >
+          {body}
+        </Modal>
+      }
     </div>
   );
 };
