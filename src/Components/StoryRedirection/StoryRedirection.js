@@ -11,13 +11,17 @@ const StoryLine = () => {
     return state.storyLines.filter(x => x.uuid === id);
   });
 
+  if (!data) {
+    return (<div>Loading</div>)
+  }
+
   return (
     <div className='storyLineContainer'>
       {data &&
 
         data[0] && data[0].storylineitem_set.map((storyLineItem, index) => {
           return (
-            <Suspense key={index} fallback={<div>.</div>}>
+            <Suspense key={index} fallback={<div>Loading....</div>}>
               <Thumbnail
                 id={data[0].id}
                 image={storyLineItem.image}

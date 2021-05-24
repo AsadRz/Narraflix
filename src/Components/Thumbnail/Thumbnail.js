@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import actions from "../../store/actions";
 import { useColor } from "color-thief-react";
 import Loader from '../../assets/Img/loaderrrrr.gif'
 
@@ -24,6 +23,7 @@ const Thumbnail = (props) => {
   const [id, setId] = useState(props.id || sid);
   const [width, setWidth] = useState(window.innerWidth);
   const [imgLoading, setImgLoading] = useState(true);
+  const [stoploader, setStopLoader] = useState(true);
 
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
@@ -34,6 +34,13 @@ const Thumbnail = (props) => {
       window.removeEventListener("resize", handleWindowSizeChange);
     };
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setImgLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [stoploader]);
 
   let isMobile = width <= 444;
   const { data, loading, error } = useColor("/mountains.jpg", "hex", {
@@ -109,7 +116,7 @@ const Thumbnail = (props) => {
       if (Index == index) {
         return data.map((hotspots) => {
           return hotspots.map((hotspot) => {
-            if (hotspot.type === "link") {
+            if (hotspot.type === "link" && !imgLoading) {
               return (
                 <div
                   className="hotspot"
@@ -125,7 +132,7 @@ const Thumbnail = (props) => {
                   }
                 ></div>
               );
-            } else if (hotspot.type === "text") {
+            } else if (hotspot.type === "text" && !imgLoading) {
               return (
                 <p
                   style={{
@@ -140,7 +147,7 @@ const Thumbnail = (props) => {
                   {hotspot.content}
                 </p>
               );
-            } else if (hotspot.type === "web") {
+            } else if (hotspot.type === "web" && !imgLoading) {
               return (
                 <div
                   className="hotspot web"
@@ -226,7 +233,7 @@ const Thumbnail = (props) => {
               height: "100%",
 
               width: "100%",
-              backgroundSize: "cover",
+              backgroundSize: "auto",
               position: "absolute",
             }}
             autoPlay
@@ -245,7 +252,7 @@ const Thumbnail = (props) => {
               id="image" src={bg}
               style={{ display: imgLoading ? 'none' : 'block' }}
               onLoad={() => {
-                setImgLoading(false);
+                setStopLoader(!stoploader);
                 // console.log('img is load');
                 // alert('img loaded')
               }}

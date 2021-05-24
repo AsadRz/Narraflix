@@ -16,7 +16,7 @@ const API = axios.create({
 // });
 //For integrating Triggers.
 
-const storyLines = '/storyline';
+const storyLines = '/storyline/';
 
 
 // Story Line Item 
