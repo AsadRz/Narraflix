@@ -1,0 +1,13 @@
+.storyLineContainer {
+  display: flex;
+  /* background-color: lightcoral; */
+  
+}
+.thumbnail{
+    margin: 1em;
+}
+@media screen and (width:460px){
+  .thumbnail{
+    margin: .4em;
+}
+}
