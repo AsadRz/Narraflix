@@ -22,16 +22,18 @@ const StoryLine = () => {
         data[0] && data[0].storylineitem_set.map((storyLineItem, index) => {
           return (
             <Suspense key={index} fallback={<div>Loading....</div>}>
-              <Thumbnail
-                id={data[0].id}
-                image={storyLineItem.image}
-                index={index}
-                className='thumbnail'
-                key={index}
-                open={storyLineItem.id == storyIndex}
-                uuid={id}
-                isRedirectUrl
-              />
+              {data &&
+                <Thumbnail
+                  id={data[0].id}
+                  image={storyLineItem.image}
+                  index={index}
+                  className='thumbnail'
+                  key={index}
+                  open={storyLineItem.id == storyIndex}
+                  uuid={id}
+                  isRedirectUrl
+                />
+              }
             </Suspense>
           );
         })

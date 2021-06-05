@@ -39,7 +39,7 @@ const AppRouter = () => {
         <Route path="/" exact >
           <Home />
         </Route>
-        <Route path="/storyline/:id/:storyIndex">
+        <Route path="/storyline/:id/:storyIndex" exact>
           <StoryRedirection />
         </Route>
       </Switch>
