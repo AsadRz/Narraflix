@@ -1,16 +1,15 @@
 import "./Thumbnail.css";
-import Modal from "@material-ui/core/Modal";
-import { makeStyles } from "@material-ui/core/styles";
+// import Modal from "@material-ui/core/Modal";
+// import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { useColor } from "color-thief-react";
+import ModalImage from './ModalImage'
 import Loader from '../../assets/Img/loaderrrrr.gif'
 
 
 const Thumbnail = (props) => {
-  //Dispatch variable
-  const dispatch = useDispatch();
+
   let history = useHistory();
   let { sid } = useParams();
   //useState
@@ -21,52 +20,10 @@ const Thumbnail = (props) => {
   const [index, setIndex] = useState(props.index);
   const storyLines = useSelector((state) => state.storyLines);
   const [id, setId] = useState(props.id || sid);
-  const [width, setWidth] = useState(window.innerWidth);
+  // const [width, setWidth] = useState(window.innerWidth);
   const [imgLoading, setImgLoading] = useState(true);
-  const [stoploader, setStopLoader] = useState(true);
 
-  function handleWindowSizeChange() {
-    setWidth(window.innerWidth);
-  }
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowSizeChange);
-    return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
-    };
-  }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setImgLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [stoploader]);
-
-  let isMobile = width <= 444;
-  const { data, loading, error } = useColor("/mountains.jpg", "hex", {
-    crossOrigin: "Anonymous",
-    quality: 10000000000000000000000,
-  });
-  /*The useColor statement above uses a propositional image stored in local host.
-  It is done to byPass the CORS error. Once the application is deployed on server,
-   the address "/mountains.jpg" will have to be replaced with "storyLine.storylineitem_set[index].image".
-   Once done this will change the color of background based on the image being viewed*/
-
-  //styles
-  const useStyles = makeStyles((theme) => ({
-    paper: {
-      display: "flex",
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      backgroundColor: isMobile === false ? data === null ? "#000" : data : "black",
-      boxShadow: theme.shadows[5],
-      alignContent: "center",
-      justifyContent: "center",
-    },
-  }));
-
-  //Functions
 
   const storyLineExtractor = (id) => {
     let storyLine = storyLines.filter((findStoryLine) => {
@@ -180,15 +137,15 @@ const Thumbnail = (props) => {
     setViewModal(true);
   };
 
-  const handleClose = () => {
-    console.log("Closed Veroo");
-    setViewModal(false);
-    setBg(props.image);
-    setId(props.id);
-    setIndex(props.index);
-    storyLine = [];
-    history.push(`/`);
-  };
+  // const handleClose = () => {
+  //   console.log("Closed Veroo");
+  //   setViewModal(false);
+  //   setBg(props.image);
+  //   setId(props.id);
+  //   setIndex(props.index);
+  //   storyLine = [];
+  //   history.push(`/`);
+  // };
 
   const leftButtonClicked = () => {
     if (index <= length - 1 && index > 0) {
@@ -207,6 +164,7 @@ const Thumbnail = (props) => {
   };
 
   const hotspotInternalClick = (id) => {
+    setImgLoading(true);
     let item = storyItemSpec(id);
     item = item[0];
     let st = storyLineExtractor(item.storyline);
@@ -218,62 +176,62 @@ const Thumbnail = (props) => {
 
   const hotspotExternalClick = () => { };
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const body = (
-    <div className={classes.paper}>
-      <p onClick={handleClose} className="cross">
-        X
-      </p>
-      <div className="imageContainer">
-        {" "}
-        {storyLine.storylineitem_set[index].is_video ? (
-          <video
-            style={{
-              height: "100%",
+    <div className="imageContainer">
+      {" "}
+      {storyLine.storylineitem_set[index].is_video ? (
+        <video
+          style={{
+            height: "100%",
 
-              width: "100%",
-              backgroundSize: "auto",
-              position: "absolute",
-            }}
-            autoPlay
-            loop
-          >
-            <source src={storyLine.storylineitem_set[index].video} />
-          </video>
-        ) : (
-          <>
-            {imgLoading ? (
-              <img
-                id="image" className="loaderImg" src={Loader}
-              />
-            ) : ('')}
+            width: "100%",
+            backgroundSize: "auto",
+            position: "absolute",
+          }}
+          autoPlay
+          loop
+          onLoad={() => {
+            setImgLoading(false);
+            // console.log('img is load');
+            // alert('img loaded')
+          }}
+        >
+          <source src={storyLine.storylineitem_set[index].video} />
+        </video>
+      ) : (
+        <>
+          {imgLoading ? (
             <img
-              id="image" src={bg}
-              style={{ display: imgLoading ? 'none' : 'block' }}
-              onLoad={() => {
-                setStopLoader(!stoploader);
-                // console.log('img is load');
-                // alert('img loaded')
-              }}
+              id="image" className="loaderImg" src={Loader}
             />
-          </>
-        )}
-        {index > 0 && (
-          <div className="leftButton" onClick={leftButtonClicked}></div>
-        )}
-        {index < length - 1 && (
-          <div className="rightButton" onClick={rightButtonClicked}></div>
-        )}
-        {index == length - 1 && <div className="lastStoryText">Last Story</div>}
-        <div className="hotspots">{storyItemExtractor(id)}</div>
-      </div>
+          ) : ('')}
+          <img
+            id="image" src={bg}
+            style={{ display: imgLoading ? 'none' : 'block' }}
+            onLoad={() => {
+              setImgLoading(false);
+              // console.log('img is load');
+              // alert('img loaded')
+            }}
+          />
+        </>
+      )}
+      {index > 0 && (
+        <div className="leftButton" onClick={leftButtonClicked}></div>
+      )}
+      {index < length - 1 && (
+        <div className="rightButton" onClick={rightButtonClicked}></div>
+      )}
+      {index == length - 1 && <div className="lastStoryText"></div>}
+      <div className="hotspots">{storyItemExtractor(id)}</div>
     </div>
   );
 
   let BG = props.image;
 
-  console.log(viewModal, 'viewModel');
+  console.log(storyLine.storylineitem_set[index].image, 'viewModel');
 
   return (
     <div>
@@ -288,14 +246,16 @@ const Thumbnail = (props) => {
         ></div>
       }
       {props.isRedirectUrl &&
-        <Modal
-          open={viewModal}
-          onClose={handleClose}
-          aria-labelledby="Image-Modal"
-          aria-describedby="This is a modal containing stories"
-        >
-          {body}
-        </Modal>
+ 
+       
+        <ModalImage
+          image={storyLine.storylineitem_set[index].image}
+          viewModal={viewModal}
+          body={body}
+          imgLoading={imgLoading}
+        />
+
+
       }
     </div>
   );

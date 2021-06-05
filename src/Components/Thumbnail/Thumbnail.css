@@ -16,13 +16,13 @@ h1 {
 }
 .imageContainer {
   position: relative;
-  height: 100%;
+  /* height: 100%; */
   width: 444px; 
   background-size: cover;
   position: relative;
   display: flex;
   align-items: center;
-  background-color:black;
+  /* background-color:black; */
 }
 #image {
   /* height: 100%; */
