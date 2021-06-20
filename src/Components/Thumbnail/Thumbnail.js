@@ -2,7 +2,7 @@ import "./Thumbnail.css";
 // import Modal from "@material-ui/core/Modal";
 // import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import ModalImage from './ModalImage'
 import Loader from '../../assets/Img/loaderrrrr.gif'
@@ -22,6 +22,8 @@ const Thumbnail = (props) => {
   const [id, setId] = useState(props.id || sid);
   // const [width, setWidth] = useState(window.innerWidth);
   const [imgLoading, setImgLoading] = useState(true);
+  const [videoSrc, setVideoSrc] = useState(null);
+
 
 
 
@@ -36,7 +38,11 @@ const Thumbnail = (props) => {
     return storyLine;
   };
   useEffect(() => {
+    debugger;
     setBg(storyLine.storylineitem_set[index].image);
+    if (storyLine.storylineitem_set[index].is_video) {
+      setVideoSrc(storyLine.storylineitem_set[index].video);
+    }
   }, [index]);
   let storyLine = storyLineExtractor(id);
   let length = storyLine.storylineitem_set.length;
@@ -156,6 +162,7 @@ const Thumbnail = (props) => {
   };
 
   const rightButtonClicked = () => {
+    debugger;
     if (index < length - 1) {
       setImgLoading(true);
       setIndex(index + 1);
@@ -164,6 +171,7 @@ const Thumbnail = (props) => {
   };
 
   const hotspotInternalClick = (id) => {
+    debugger;
     setImgLoading(true);
     let item = storyItemSpec(id);
     item = item[0];
@@ -181,43 +189,52 @@ const Thumbnail = (props) => {
   const body = (
     <div className="imageContainer">
       {" "}
-      {storyLine.storylineitem_set[index].is_video ? (
-        <video
-          style={{
-            height: "100%",
+      {
+        storyLine.storylineitem_set[index].is_video ? (
+          <>
+            {imgLoading ? (
+              <img
+                id="image" className="loaderImg" src={Loader}
+              />
+            ) : ('')}
+            <video
+            key={videoSrc}
+              style={{
+                height: "100%",
 
-            width: "100%",
-            backgroundSize: "auto",
-            position: "absolute",
-          }}
-          autoPlay
-          loop
-          onLoad={() => {
-            setImgLoading(false);
-            // console.log('img is load');
-            // alert('img loaded')
-          }}
-        >
-          <source src={storyLine.storylineitem_set[index].video} />
-        </video>
-      ) : (
-        <>
-          {imgLoading ? (
+                width: "100%",
+                backgroundSize: "auto",
+                position: "absolute",
+              }}
+              autoPlay
+              loop
+              onLoad={() => {
+                setImgLoading(false);
+                // console.log('img is load');
+                // alert('img loaded')
+              }}
+            >
+              <source src={videoSrc} />
+            </video>
+          </>
+        ) : (
+          <>
+            {imgLoading ? (
+              <img
+                id="image" className="loaderImg" src={Loader}
+              />
+            ) : ('')}
             <img
-              id="image" className="loaderImg" src={Loader}
+              id="image" src={bg}
+              style={{ display: imgLoading ? 'none' : 'block' }}
+              onLoad={() => {
+                setImgLoading(false);
+                // console.log('img is load');
+                // alert('img loaded')
+              }}
             />
-          ) : ('')}
-          <img
-            id="image" src={bg}
-            style={{ display: imgLoading ? 'none' : 'block' }}
-            onLoad={() => {
-              setImgLoading(false);
-              // console.log('img is load');
-              // alert('img loaded')
-            }}
-          />
-        </>
-      )}
+          </>
+        )}
       {index > 0 && (
         <div className="leftButton" onClick={leftButtonClicked}></div>
       )}
@@ -231,7 +248,7 @@ const Thumbnail = (props) => {
 
   let BG = props.image;
 
-  console.log(storyLine.storylineitem_set[index].image, 'viewModel');
+  console.log(storyLine.storylineitem_set[index], 'viewModel');
 
   return (
     <div>
@@ -246,8 +263,8 @@ const Thumbnail = (props) => {
         ></div>
       }
       {props.isRedirectUrl &&
- 
-       
+
+
         <ModalImage
           image={storyLine.storylineitem_set[index].image}
           viewModal={viewModal}

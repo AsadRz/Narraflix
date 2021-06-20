@@ -6,7 +6,7 @@ import { useColor } from "color-thief-react";
 
 const ModalImage = (props) => {
     console.log(props.image);
-    debugger;
+
     const [width, setWidth] = useState(window.innerWidth);
 
     function handleWindowSizeChange() {
