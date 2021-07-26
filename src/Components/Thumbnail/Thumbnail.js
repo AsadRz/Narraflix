@@ -214,7 +214,10 @@ const Thumbnail = (props) => {
   // const classes = useStyles();
 
   const body = (
-    <div className='imageContainer'>
+    <div
+      className='imageContainer'
+      style={{ height: storyLine.storylineitem_set[index].is_video && '100vh' }}
+    >
       {' '}
       {storyLine.storylineitem_set[index].is_video ? (
         <>
