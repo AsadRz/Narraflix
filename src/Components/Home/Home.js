@@ -2,6 +2,7 @@
 // import StoryLine from "../StoryLine/StoryLine";
 import actions from '../../store/actions';
 import React, { Suspense, useEffect } from 'react';
+// import { useHistory, useParams } from 'react-router-dom';
 import './Home.css';
 import { useSelector } from 'react-redux';
 const StoryLine = React.lazy(() => import('../StoryLine/StoryLine'));
@@ -15,7 +16,10 @@ const Home = () => {
   //   dispatch(actions.fetchStoryItems());
   // }, [dispatch]);
 
-
+  useEffect(() => {
+    // <Redirect to='https://narraflix.com/' />;
+    window.location.replace('https://narraflix.com/');
+  });
 
   //state
   const data = useSelector((state) => {
@@ -41,10 +45,3 @@ const Home = () => {
   );
 };
 export default Home;
-
-
-
-
-
-
-

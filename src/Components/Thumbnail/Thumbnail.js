@@ -1,15 +1,13 @@
-import "./Thumbnail.css";
+import './Thumbnail.css';
 // import Modal from "@material-ui/core/Modal";
 // import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import ModalImage from './ModalImage'
-import Loader from '../../assets/Img/loaderrrrr.gif'
-
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import ModalImage from './ModalImage';
+import Loader from '../../assets/Img/loaderrrrr.gif';
 
 const Thumbnail = (props) => {
-
   let history = useHistory();
   let { sid } = useParams();
   //useState
@@ -24,9 +22,6 @@ const Thumbnail = (props) => {
   const [imgLoading, setImgLoading] = useState(true);
   const [videoSrc, setVideoSrc] = useState(null);
 
-
-
-
   const storyLineExtractor = (id) => {
     let storyLine = storyLines.filter((findStoryLine) => {
       if (findStoryLine.id == id) {
@@ -38,7 +33,7 @@ const Thumbnail = (props) => {
     return storyLine;
   };
   useEffect(() => {
-    debugger;
+    // debugger;
     setBg(storyLine.storylineitem_set[index].image);
     if (storyLine.storylineitem_set[index].is_video) {
       setVideoSrc(storyLine.storylineitem_set[index].video);
@@ -79,10 +74,36 @@ const Thumbnail = (props) => {
       if (Index == index) {
         return data.map((hotspots) => {
           return hotspots.map((hotspot) => {
-            if (hotspot.type === "link" && !imgLoading) {
+            if (hotspot.type === 'link' && !imgLoading) {
+              // console.log('Hotspots', hotspot);
+              // const windowWidth = window.innerWidth;
+              // const imageWidth =
+              //   document.getElementsByClassName('imageContainer')[0]
+              //     .clientWidth;
+
+              // const remainingWidth = (windowWidth - imageWidth) / 2;
+
+              // const horizontalHotSpotPosition =
+              //   (remainingWidth + (hotspot.position_left / 100) * imageWidth) /
+              //   100;
+
+              // const windowHeight = window.innerHeight;
+              // const imageHeight = document.getElementById('image').clientHeight;
+
+              // const remainingHeight = (windowHeight - imageHeight) / 2;
+
+              // const verticalHotSpotPosition =
+              //   (remainingHeight + (hotspot.position_top / 100) * imageHeight) /
+              //   100;
+
+              // console.log({
+              //   horizontalHotSpotPosition,
+              //   verticalHotSpotPosition,
+              // });
+
               return (
                 <div
-                  className="hotspot"
+                  className='hotspot'
                   style={{
                     fontSize: `${hotspot.font_size}`,
                     textAlign: `${hotspot.text_align}`,
@@ -95,11 +116,11 @@ const Thumbnail = (props) => {
                   }
                 ></div>
               );
-            } else if (hotspot.type === "text" && !imgLoading) {
+            } else if (hotspot.type === 'text' && !imgLoading) {
               return (
                 <p
                   style={{
-                    position: "absolute",
+                    position: 'absolute',
                     fontSize: `${hotspot.font_size}`,
                     textAlign: `${hotspot.text_align}`,
                     top: `${hotspot.position_top}%`,
@@ -110,24 +131,24 @@ const Thumbnail = (props) => {
                   {hotspot.content}
                 </p>
               );
-            } else if (hotspot.type === "web" && !imgLoading) {
+            } else if (hotspot.type === 'web' && !imgLoading) {
               return (
-                <div
-                  className="hotspot web"
-                  style={{
-                    fontSize: `${hotspot.font_size}`,
-                    textAlign: `${hotspot.text_align}`,
-                    top: `${hotspot.position_top}%`,
-                    left: `${hotspot.position_left}%`,
-                    color: `#${hotspot.text_hex_color}`,
-                  }}
-                  onClick={hotspotExternalClick}
-                >
+                <div className='hotspot web' onClick={hotspotExternalClick}>
                   <a
+                    style={{
+                      position: 'absolute',
+                      fontSize: `${hotspot.font_size}`,
+                      textAlign: `${hotspot.text_align}`,
+                      top: `${hotspot.position_top}%`,
+                      left: `${hotspot.position_left}%`,
+                      color: `#${hotspot.text_hex_color}`,
+                    }}
                     href={`${hotspot.external_link}`}
-                    target="_blank"
-                    alt="This is a link"
-                  ></a>
+                    target='_blank'
+                    alt='This is a link'
+                  >
+                    <div className='circle'></div>
+                  </a>
                 </div>
               );
             }
@@ -139,7 +160,9 @@ const Thumbnail = (props) => {
   };
 
   const handleOpen = () => {
-    history.push(`/storyline/${props.uuid}/${storyLine.storylineitem_set[index].id}`);
+    history.push(
+      `/storyline/${props.uuid}/${storyLine.storylineitem_set[index].id}`
+    );
     setViewModal(true);
   };
 
@@ -157,21 +180,25 @@ const Thumbnail = (props) => {
     if (index <= length - 1 && index > 0) {
       setImgLoading(true);
       setIndex(index - 1);
-      history.push(`/storyline/${props.uuid}/${storyLine.storylineitem_set[index - 1].id}`);
+      history.push(
+        `/storyline/${props.uuid}/${storyLine.storylineitem_set[index - 1].id}`
+      );
     }
   };
 
   const rightButtonClicked = () => {
-    debugger;
+    // debugger;
     if (index < length - 1) {
       setImgLoading(true);
       setIndex(index + 1);
-      history.push(`/storyline/${props.uuid}/${storyLine.storylineitem_set[index + 1].id}`);
+      history.push(
+        `/storyline/${props.uuid}/${storyLine.storylineitem_set[index + 1].id}`
+      );
     }
   };
 
   const hotspotInternalClick = (id) => {
-    debugger;
+    // debugger;
     setImgLoading(true);
     let item = storyItemSpec(id);
     item = item[0];
@@ -182,67 +209,67 @@ const Thumbnail = (props) => {
     setIndex(item.order - 1);
   };
 
-  const hotspotExternalClick = () => { };
+  const hotspotExternalClick = () => {};
 
   // const classes = useStyles();
 
   const body = (
-    <div className="imageContainer">
-      {" "}
-      {
-        storyLine.storylineitem_set[index].is_video ? (
-          <>
-            {imgLoading ? (
-              <img
-                id="image" className="loaderImg" src={Loader}
-              />
-            ) : ('')}
-            <video
+    <div className='imageContainer'>
+      {' '}
+      {storyLine.storylineitem_set[index].is_video ? (
+        <>
+          {imgLoading ? (
+            <img id='image' className='loaderImg' src={Loader} />
+          ) : (
+            ''
+          )}
+          <video
             key={videoSrc}
-              style={{
-                height: "100%",
+            style={{
+              height: '100%',
 
-                width: "100%",
-                backgroundSize: "auto",
-                position: "absolute",
-              }}
-              autoPlay
-              loop
-              onLoad={() => {
-                setImgLoading(false);
-                // console.log('img is load');
-                // alert('img loaded')
-              }}
-            >
-              <source src={videoSrc} />
-            </video>
-          </>
-        ) : (
-          <>
-            {imgLoading ? (
-              <img
-                id="image" className="loaderImg" src={Loader}
-              />
-            ) : ('')}
-            <img
-              id="image" src={bg}
-              style={{ display: imgLoading ? 'none' : 'block' }}
-              onLoad={() => {
-                setImgLoading(false);
-                // console.log('img is load');
-                // alert('img loaded')
-              }}
-            />
-          </>
-        )}
+              width: '100%',
+              backgroundSize: 'auto',
+              position: 'absolute',
+            }}
+            autoPlay
+            loop
+            onLoad={() => {
+              setImgLoading(false);
+              // console.log('img is load');
+              // alert('img loaded')
+            }}
+          >
+            <source src={videoSrc} />
+          </video>
+        </>
+      ) : (
+        <>
+          {imgLoading ? (
+            <img id='image' className='loaderImg' src={Loader} />
+          ) : (
+            ''
+          )}
+          <img
+            id='image'
+            src={bg}
+            style={{ display: imgLoading ? 'none' : 'block' }}
+            onLoad={() => {
+              setImgLoading(false);
+              // console.log('img is load');
+              // alert('img loaded')
+            }}
+          />
+        </>
+      )}
       {index > 0 && (
-        <div className="leftButton" onClick={leftButtonClicked}></div>
+        <div className='leftButton' onClick={leftButtonClicked}></div>
       )}
       {index < length - 1 && (
-        <div className="rightButton" onClick={rightButtonClicked}></div>
+        <div className='rightButton' onClick={rightButtonClicked}></div>
       )}
-      {index == length - 1 && <div className="lastStoryText"></div>}
-      <div className="hotspots">{storyItemExtractor(id)}</div>
+      {index == length - 1 && <div className='lastStoryText'></div>}
+      <div className='hotspots'>{storyItemExtractor(id)}</div>
     </div>
   );
 
@@ -252,28 +279,24 @@ const Thumbnail = (props) => {
 
   return (
     <div>
-      {!props.isRedirectUrl &&
+      {!props.isRedirectUrl && (
         <div
           style={{
             backgroundImage: `url("${BG}")`,
-            backgroundSize: "cover  ",
+            backgroundSize: 'cover  ',
           }}
-          className="thumbnailContainer"
+          className='thumbnailContainer'
           onClick={handleOpen}
         ></div>
-      }
-      {props.isRedirectUrl &&
-
-
+      )}
+      {props.isRedirectUrl && (
         <ModalImage
           image={storyLine.storylineitem_set[index].image}
           viewModal={viewModal}
           body={body}
           imgLoading={imgLoading}
         />
-
-
-      }
+      )}
     </div>
   );
 };
