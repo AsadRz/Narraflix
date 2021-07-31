@@ -18,7 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     // <Redirect to='https://narraflix.com/' />;
-   // window.location.replace('https://narraflix.com/');
+    window.location.replace('https://narraflix.com/');
   });
 
   //state
