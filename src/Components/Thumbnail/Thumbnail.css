@@ -20,7 +20,7 @@ h1 {
   width: 444px;
   background-size: cover;
   display: flex;
-  align-self: center;
+  /* align-self: center; */
 }
 #image {
   /* height: 100%; */
