@@ -213,6 +213,8 @@ const Thumbnail = (props) => {
 
   // const classes = useStyles();
 
+
+  // Height Handling Inline for videos
   const body = (
     <div
       className='imageContainer'
