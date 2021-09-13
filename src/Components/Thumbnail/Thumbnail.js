@@ -51,6 +51,7 @@ const Thumbnail = (props) => {
     return storyItemObjects;
   };
   const storyItemExtractor = (id) => {
+    // debugger;
     let hotSpotSet = storyItems.map((currentStoryLine) => {
       if (currentStoryLine.storyline === id) {
         return currentStoryLine.hotspot_set;
@@ -74,7 +75,10 @@ const Thumbnail = (props) => {
       if (Index == index) {
         return data.map((hotspots) => {
           return hotspots.map((hotspot) => {
-            if (hotspot.type === 'link' && !imgLoading) {
+            if (
+              hotspot.type === 'link' &&
+              (!imgLoading || storyLine.storylineitem_set[index].is_video)
+            ) {
               // console.log('Hotspots', hotspot);
               // const windowWidth = window.innerWidth;
               // const imageWidth =
@@ -105,6 +109,7 @@ const Thumbnail = (props) => {
                 <div
                   className='hotspot'
                   style={{
+                    position: 'absolute',
                     fontSize: `${hotspot.font_size}`,
                     textAlign: `${hotspot.text_align}`,
                     top: `${hotspot.position_top}%`,
@@ -114,9 +119,15 @@ const Thumbnail = (props) => {
                   onClick={() =>
                     hotspotInternalClick(hotspot.link_to_story_line_item)
                   }
-                ></div>
+                >
+                  {' '}
+                  <div className='circle'></div>
+                </div>
               );
-            } else if (hotspot.type === 'text' && !imgLoading) {
+            } else if (
+              hotspot.type === 'text' &&
+              (!imgLoading || storyLine.storylineitem_set[index].is_video)
+            ) {
               return (
                 <p
                   style={{
@@ -131,7 +142,10 @@ const Thumbnail = (props) => {
                   {hotspot.content}
                 </p>
               );
-            } else if (hotspot.type === 'web' && !imgLoading) {
+            } else if (
+              hotspot.type === 'web' &&
+              (!imgLoading || storyLine.storylineitem_set[index].is_video)
+            ) {
               return (
                 <div className='hotspot web' onClick={hotspotExternalClick}>
                   <a
@@ -218,7 +232,10 @@ const Thumbnail = (props) => {
   const body = (
     <div
       className='imageContainer'
-      style={{ height: storyLine.storylineitem_set[index].is_video && '100vh' }}
+      style={{
+        height: storyLine.storylineitem_set[index].is_video && '100%',
+        alignSelf: !storyLine.storylineitem_set[index].is_video && 'center',
+      }}
     >
       {' '}
       {storyLine.storylineitem_set[index].is_video ? (

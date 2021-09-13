@@ -1,6 +1,6 @@
 // import View from '../View/View';
 // import StoryLine from "../StoryLine/StoryLine";
-import actions from '../../store/actions';
+// import actions from '../../store/actions';
 import React, { Suspense, useEffect } from 'react';
 // import { useHistory, useParams } from 'react-router-dom';
 import './Home.css';
