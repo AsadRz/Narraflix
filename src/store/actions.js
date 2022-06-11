@@ -1,16 +1,26 @@
-import constants from './constants';
-import services from '../services';
+import constants from "./constants";
+import services from "../services";
 
 const fetchStoryLines = () => {
-  console.log('Fetch Action');
+  console.log("Fetch Action");
   return (dispatch) => {
     try {
       services
         .fetchStoryLines()
         .then((res) => {
+          const result = res.data?.map(
+            (item) =>
+              (item = {
+                ...item,
+                storylineitem_set: item?.storylineitem_set?.sort((a, b) => {
+                  return a.order - b.order;
+                }),
+              })
+          );
+
           dispatch({
             type: constants.FETCH_STORYLINES,
-            payload: { storyLines: res.data },
+            payload: { storyLines: result },
           });
         })
         .catch((error) => {
@@ -26,7 +36,7 @@ const fetchStoryLines = () => {
   };
 };
 const fetchHotSpots = () => {
-  console.log('Fetch Action');
+  console.log("Fetch Action");
   return (dispatch) => {
     try {
       services
@@ -46,7 +56,7 @@ const fetchHotSpots = () => {
   };
 };
 const fetchStoryItems = () => {
-  console.log('Fetch Action');
+  console.log("Fetch Action");
   return (dispatch) => {
     try {
       services

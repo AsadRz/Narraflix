@@ -127,3 +127,24 @@ a {
     opacity: 0.6;
   }
 }
+
+.share-section,
+.button-wrapper {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  margin: 0 auto;
+}
+
+.share-story-img {
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+  z-index: 9999999;
+}
+
+.MuiButton-root {
+  text-transform: unset !important;
+}

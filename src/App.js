@@ -1,19 +1,13 @@
-import React, { useEffect } from 'react';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
 import Home from "./Components/Home/Home";
 import NavBar from "./Components/NavBar/NavBar";
-import StoryRedirection from './Components/StoryRedirection/StoryRedirection'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-
-} from "react-router-dom";
-import actions from './store/actions';
-import { useDispatch } from 'react-redux';
+import StoryRedirection from "./Components/StoryRedirection/StoryRedirection";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import actions from "./store/actions";
+import { useDispatch } from "react-redux";
 
 function App() {
-
   const dispatch = useDispatch();
   //Hooks
   useEffect(() => {
@@ -24,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar />
+      {/* <NavBar /> */}
       <AppRouter />
     </div>
   );
@@ -36,7 +30,7 @@ const AppRouter = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact >
+        <Route path="/" exact>
           <Home />
         </Route>
         <Route path="/storyline/:id/:storyIndex" exact>
@@ -44,6 +38,5 @@ const AppRouter = () => {
         </Route>
       </Switch>
     </Router>
-  )
-}
-
+  );
+};
