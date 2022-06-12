@@ -1,7 +1,7 @@
 import "./Thumbnail.css";
 // import Modal from "@material-ui/core/Modal";
 // import { makeStyles } from "@material-ui/core/styles";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import ModalImage from "./ModalImage";
@@ -56,19 +56,27 @@ const Thumbnail = (props) => {
     return storyItemObjects;
   };
   const storyItemExtractor = (id) => {
-    // debugger;
-    let hotSpotSet = storyItems.map((currentStoryLine) => {
-      if (currentStoryLine.storyline === id) {
-        return currentStoryLine.hotspot_set;
-      }
-    });
-    hotSpotSet = hotSpotSet.filter((filterUndefinedItem) => {
-      if (filterUndefinedItem !== undefined) {
-        return filterUndefinedItem;
-      }
-    });
+    // let hotSpotSet = storyItems.filter((currentStoryLine) => {
+    //   if (currentStoryLine.storyline === id) {
+    //     return currentStoryLine.hotspot_set;
+    //   }
+    // });
+
+    let hotSpotSet = storyItems.filter((x) => x.storyline === id);
+
+    if (hotSpotSet) {
+      hotSpotSet.sort((a, b) => {
+        return a.order - b.order;
+      });
+    }
+
+    // hotSpotSet = hotSpotSet.filter((filterUndefinedItem) => {
+    //   if (filterUndefinedItem !== undefined) {
+    //     return filterUndefinedItem;
+    //   }
+    // });
     let hotS = hotSpotSet.map((nestedArrays) => {
-      return nestedArrays.map((nestedArray) => {
+      return nestedArrays.hotspot_set.map((nestedArray) => {
         return hotSpots.filter((filteredArray) => {
           if (nestedArray == filteredArray.id) {
             return filteredArray;
@@ -177,7 +185,6 @@ const Thumbnail = (props) => {
     });
     return hotS;
   };
-
   const handleOpen = () => {
     history.push(
       `/storyline/${props.uuid}/${storyLine.storylineitem_set[index].id}`
