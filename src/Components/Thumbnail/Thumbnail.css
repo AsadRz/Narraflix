@@ -129,6 +129,10 @@ a {
     color: white;
     opacity: 0.6;
   }
+
+  .share-story-img {
+    width: 100% !important;
+  }
 }
 
 .share-section,
