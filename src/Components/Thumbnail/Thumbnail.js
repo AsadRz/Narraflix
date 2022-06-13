@@ -315,10 +315,10 @@ const Thumbnail = (props) => {
   const body = (
     <div
       className="imageContainer"
-      style={{
-        height: storyLine?.storylineitem_set[index]?.is_video && "100vh",
-        alignSelf: !storyLine?.storylineitem_set[index]?.is_video && "center",
-      }}
+      // style={{
+
+      //   alignSelf: !storyLine?.storylineitem_set[index]?.is_video && "center",
+      // }}
     >
       {!lastShareStory ? (
         <>

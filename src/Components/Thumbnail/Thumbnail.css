@@ -20,6 +20,9 @@ h1 {
   width: 444px;
   background-size: cover;
   display: flex;
+
+  align-self: center;
+  height: inherit;
   /* align-self: center; */
 }
 #image {
